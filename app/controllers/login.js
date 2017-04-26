@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import config from '../config/environment';
 
 export default Ember.Controller.extend({
+  session: Ember.inject.service('session'),
+
   actions: {
     verifyLogin() {
-      let api = config.APP.API + '/signin';
       Ember.$("#loginForm").validate();
 
       /* FIXME: Make this all less awful */
@@ -13,35 +13,25 @@ export default Ember.Controller.extend({
       }
 
       /* FIXME: Should not have to check this */
-      let t = this;
-      let email = t.get('email');
-      let pass = t.get('password');
-      let notify = t.get('notify');
+      let email = this.get('email');
+      let pass = this.get('password');
+      let notify = this.get('notify');
 
       if (!email.length || !pass.length) {
         return;
       }
 
-      Ember.$.post(api, {
-        email: email,
-        pass: pass
-      }).done(function(data) {
-        if (data.data == 0) {
-          notify.success(data.message, {
-            closeAfter: 20000
-          });
-          let token = data.token;
-          window.Cookies.set('auth.token', token);
-          t.transitionToRoute('index');
+      this.get('session').authenticate('authenticator:flask', email, pass).then(() => {
+        notify.success('You have been logged in.');
+      }).catch((reason) => {
+        let message = '';
+        // dunno how this happens but it shouldn't
+        if (reason.responseJSON.message instanceof Object) {
+          message += 'API error: Please try again.';
         } else {
-          notify.alert(data.message, {
-            closeAfter: 10000
-          });
+          message += reason.responseJSON.message;
         }
-      }).fail(function(xhr, status, error) {
-        notify.alert('An internal error has occured. Please try again.', {
-          closeAfter: 10000
-        });
+        this.set('errorMessage', message);
       });
     }
   }

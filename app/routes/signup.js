@@ -1,10 +1,8 @@
 import Ember from 'ember';
+import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 
-export default Ember.Route.extend({
-  beforeModel() {
-    if (window.Cookies.get('auth.token') != undefined) {
-      this.get('notify').success('You are already logged in');
-      this.transitionTo('index');
-    }
+export default Ember.Route.extend(UnauthenticatedRouteMixin, {
+  beforeModel(transition, queryParams) {
+    this._super(transition, queryParams);
   }
 });
