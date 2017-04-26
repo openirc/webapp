@@ -12,14 +12,6 @@ export default Ember.Controller.extend({
     let url = config.APP.API + '/signout';
     let t = this;
 
-    if (!window.Cookies.get('auth.token')) {
-      notify.success('You are not signed in', {
-        closeAfter: 20000
-      });
-      t.transitionToRoute('index');
-      return;
-    }
-
     Ember.$.ajax({
       url: url,
       type: "GET",
