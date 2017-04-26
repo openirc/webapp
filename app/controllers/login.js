@@ -13,9 +13,10 @@ export default Ember.Controller.extend({
       }
 
       /* FIXME: Should not have to check this */
-      let email = this.get('email');
-      let pass = this.get('password');
-      let notify = this.get('notify');
+      let t = this;
+      let email = t.get('email');
+      let pass = t.get('password');
+      let notify = t.get('notify');
 
       if (!email.length || !pass.length) {
         return;
@@ -29,7 +30,9 @@ export default Ember.Controller.extend({
           notify.success(data.message, {
             closeAfter: 20000
           });
-          this.transitionToRoute('index');
+          let token = data.token;
+          window.Cookies.set('auth.token', token);
+          t.transitionToRoute('index');
         } else {
           notify.alert(data.message, {
             closeAfter: 10000
