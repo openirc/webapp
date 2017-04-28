@@ -1,3 +1,4 @@
+{{nav-bar}}
 <div class="container">
   <h2>Login</h2>
   {{#if errorMessage}}
@@ -17,3 +18,4 @@
     <button class="btn btn-default" {{action 'verifyLogin'}}>Login</button>
   </form>
 </div>
+{{outlet}}

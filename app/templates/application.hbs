@@ -1,18 +1,2 @@
 {{ember-notify messageStyle='bootstrap'}}
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      {{#link-to 'index' class="navbar-brand"}}OpenIRC{{/link-to}}
-    </div>
-    <ul class="nav navbar-nav">
-      <li>{{#link-to 'index'}}Home{{/link-to}}</li>
-      {{#if session.isAuthenticated}}
-        <li><a {{action 'invalidateSession'}}>Logout</a></li>
-      {{else}}
-        <li>{{#link-to 'login'}}Login{{/link-to}}</li>
-        <li>{{#link-to 'signup'}}Sign up{{/link-to}}</li>
-      {{/if}}
-    </ul>
-  </div>
-</nav>
 {{outlet}}
