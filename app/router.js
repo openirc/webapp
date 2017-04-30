@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('login');
   this.route('signup');
   this.route('confirm');
+  this.route('chat');
 });
 
 export default Router;
