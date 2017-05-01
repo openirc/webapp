@@ -1,8 +1,14 @@
-<div  style="background-color: #154d9b;">
-  <div class="row">
+<div class="row">
     <div class="col-md-2">
-      {{irc-contexts}}
+        {{irc-contexts}}
     </div>
-  </div>
-  {{outlet}}
+    <div class="col-md-8">
+        {{irc-channeltopic}}
+        {{irc-buffer}}
+        {{irc-input}}
+    </div>
+    <div class="col-md-2">
+        {{irc-userlist}}
+    </div>
 </div>
+{{outlet}}
