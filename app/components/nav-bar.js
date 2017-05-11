@@ -1,8 +1,9 @@
 import Ember from 'ember';
+var inject = Ember.inject;
 
 export default Ember.Component.extend({
-  session: Ember.inject.service('session'),
-  notify: Ember.inject.service('notify'),
+  session: inject.service(),
+  notify: inject.service(),
 
   actions: {
     invalidateSession() {
