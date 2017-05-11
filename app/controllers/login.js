@@ -25,12 +25,17 @@ export default Ember.Controller.extend({
         notify.success('You have been logged in.');
       }).catch((reason) => {
         let message = '';
-        // dunno how this happens but it shouldn't
-        if (reason.responseJSON.message instanceof Object) {
+
+        if (reason.responseJSON == undefined) {
+          // API Offline
+          message += 'API error: Please try again.';
+        } else if (reason.responseJSON.message instanceof Object) {
+          // API Error
           message += 'API error: Please try again.';
         } else {
           message += reason.responseJSON.message;
         }
+
         this.set('errorMessage', message);
       });
     }
